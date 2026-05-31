@@ -23,6 +23,28 @@ const nextConfig: NextConfig = {
   reactCompiler: true,
   cacheComponents: true,
   htmlLimitedBots: /.*/,
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'cdn-live.foreignaffairs.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.unsplash.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.economist.com',
+        port: '',
+        pathname: '/**',
+      },
+    ]
+  },
   turbopack: {
     rules: {
       "*.svg": {
