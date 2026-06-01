@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Magazine {
+  id         String    @id @default(uuid())
+  name       String
+  slug       String    @unique
+  brandColor String?
+  logoUrl    String?
+  articles   Article[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Article {
+  id            String   @id @default(uuid())
+  slug          String   @unique
+  titleOriginal String
+  titleFa       String
+  excerptFa     String   @db.Text
+  contentFa     String   @db.Text
+  imageUrl      String
+  originalLink  String
+  readTime      Int      @default(5) // in minutes
+  publishedAt   DateTime // Original magazine publication date
+  
+  magazineId    String
+  magazine      Magazine @relation(fields: [magazineId], references: [id], onDelete: Cascade)
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([magazineId])
+  @@index([slug])
+}
